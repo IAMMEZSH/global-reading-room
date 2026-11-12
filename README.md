@@ -79,6 +79,20 @@ The complete operating manual — installation, every setting, provider setup, O
 
 ## Quick start
 
+### Download by platform
+
+Each platform has its own download folder with a README and a SHA256 checksum. GitHub and GitCode use the same layout.
+
+| Platform | Runtime | Launcher | Package |
+| --- | --- | --- | --- |
+| **Windows 10 / 11 (x64)** | Bundled Node.js | `Start Global Reading Room.vbs` | [Windows ZIP](downloads/windows/global-reading-room-1.0.0-windows-x64.zip) |
+| **Linux** | Node.js 20+ | `start.sh` | [Linux tar.gz](downloads/linux/global-reading-room-1.0.0-linux.tar.gz) |
+| **macOS 12+** | Node.js 20+ | `Start Global Reading Room.command` | [macOS tar.gz](downloads/macos/global-reading-room-1.0.0-macos.tar.gz) |
+| **Android — Termux** | Termux installs Node.js | `install-termux.sh` | [Termux ZIP](downloads/android-termux/global-reading-room-1.0.0-termux.zip) |
+| **iPhone / iPad — iSH** | iSH installs Node.js | `start-ish.sh` | [iSH ZIP](downloads/iphone-ipad-ish/global-reading-room-1.0.0-ish.zip) |
+
+All five packages are also listed in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt).
+
 ### Windows 10 / 11 (x64) — portable, click to run
 
 1. Extract `global-reading-room-1.0.0-windows-x64.zip`.

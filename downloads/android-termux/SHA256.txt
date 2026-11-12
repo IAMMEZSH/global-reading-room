@@ -1,0 +1,1 @@
+80ac6907bc0fe590b5598b19e383d668785bdb99c3947ba4fbcf7737f27d80bc *global-reading-room-1.0.0-termux.zip
