@@ -568,6 +568,10 @@ Key        (leave empty for Ollama)</code></pre>
     <li>Click <strong>重新识别</strong> to retry after changing the model or language pack.</li>
   </ol>
   <p>Windows OCR is local and free. It works best on clean screenshots, document scans and high-contrast infographics; stylized posters and tiny text can produce errors.</p>
+  <figure class="plate">
+    <img src="docs/images/ui-ocr.png" alt="Live OCR panel with recognized English text above its Chinese translation">
+    <figcaption><span>Live reader · OCR panel</span><span>Raw recognition stays visible above the Chinese translation</span></figcaption>
+  </figure>
 
   <h3>OCR with a vision model</h3>
   <p>On Linux, macOS, Termux, iSH, or for harder layouts on Windows, configure a multimodal OpenAI-compatible model in <strong>设置 → 视觉模型（可选）</strong>. The model receives the image and returns both the source text and its translation. Use a model that accepts image input; the base URL and key are the same as the OpenAI-compatible translation fields.</p>
