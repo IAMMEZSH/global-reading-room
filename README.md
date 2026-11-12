@@ -19,7 +19,7 @@ Version 1.0.0 · Node.js ≥ 20 · Windows · Linux · macOS · Android (Termux)
 | **Android — Termux** | [Termux ZIP](downloads/android-termux/global-reading-room-1.0.0-termux.zip) | `install-termux.sh` |
 | **iPhone / iPad — iSH** | [iSH ZIP](downloads/iphone-ipad-ish/global-reading-room-1.0.0-ish.zip) | `start-ish.sh` |
 
-Each platform folder contains its own `README.md` and `SHA256.txt`. All hashes are also in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt). The same five packages are attached to the [GitHub v1.0.0 release](https://github.com/IAMMEZSH/global-reading-room/releases/tag/v1.0.0).
+Each platform folder contains its own `README.md` and `SHA256.txt`. All hashes are also in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt). The same five packages are attached to the [GitHub v1.0.0 release](https://github.com/IAMMEZSH/global-reading-room/releases/tag/v1.0.0) and the [GitCode v1.0.0 release](https://gitcode.com/gcw_So3EkhfR/global-reading-room/releases/v1.0.0).
 
 ![Global Reading Room command deck](docs/images/guide-01-command-deck.png)
 
