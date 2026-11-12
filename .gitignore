@@ -1,0 +1,9 @@
+data/
+.build/
+.testdata*/
+.testout/
+.smoke/
+node_modules/
+*.log
+.DS_Store
+dist/

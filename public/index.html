@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#040912">
+<meta name="description" content="环球报阁：本地运行的中文新闻报刊阅读器，聚合全球 RSS，支持全文抓取、整篇翻译与离线导出。">
+<title>环球报阁 · 全球新闻与报刊</title>
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/theme-future.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" class="svg-sprite" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.2-4.9L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.2 4.9L20 16"/><path d="M20 20v-4h-4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.2.9-4.5 4.4 1.1 6.2-5.5-2.9-5.5 2.9 1.1-6.2L3.1 9.5l6.2-.9Z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4 10 14M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+</svg>
+
+<div class="app-shell">
+  <header class="masthead">
+    <div class="mast-left">
+      <button id="menuBtn" class="icon-btn only-mobile" aria-label="打开目录"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <div class="brand">
+        <span class="brand-seal">阁</span>
+        <div class="brand-text">
+          <span class="brand-name">环球报阁</span>
+          <span class="brand-en">GLOBAL READING ROOM</span>
+        </div>
+      </div>
+    </div>
+    <div class="mast-tools">
+      <div class="search-box">
+        <svg class="icon"><use href="#i-search"/></svg>
+        <input id="searchInput" type="search" placeholder="搜索标题、摘要、作者" autocomplete="off" aria-label="搜索文章">
+      </div>
+      <button id="syncBtn" class="btn accent sync-btn"><svg class="icon"><use href="#i-sync"/></svg><span>同步</span></button>
+      <button id="settingsBtn" class="icon-btn" title="设置" aria-label="设置"><svg class="icon"><use href="#i-sliders"/></svg></button>
+      <button id="themeBtn" class="icon-btn" title="切换夜间模式" aria-label="切换夜间模式"><svg class="icon"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <div class="status-strip">
+    <div class="strip-left"><span class="status-dot" id="statusDot"></span><span id="stripSync">正在准备工作台…</span></div>
+    <div class="strip-right" id="stripStats">本地运行 · 数据只存在这台设备</div>
+  </div>
+
+  <main class="workspace">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-scroll">
+        <div class="side-block">
+          <div class="side-label">阅读</div>
+          <nav class="view-nav" id="viewNav">
+            <button data-view="all" class="active"><span>全部文章</span><span class="nav-count" id="countAll">0</span></button>
+            <button data-view="unread"><span>未读</span><span class="nav-count" id="countUnread">0</span></button>
+            <button data-view="starred"><span>收藏</span><span class="nav-count" id="countStarred">0</span></button>
+          </nav>
+        </div>
+        <div class="side-block">
+          <div class="side-label"><span>分类</span><button id="clearFilterBtn" class="text-btn">全部</button></div>
+          <div class="cat-list" id="catList"></div>
+        </div>
+        <div class="side-block source-block">
+          <div class="side-label"><span>订阅源</span><button id="manageSourcesBtn" class="text-btn">管理</button></div>
+          <div class="source-list" id="sourceList"></div>
+        </div>
+      </div>
+      <div class="side-footer">
+        <div id="sideStats" class="side-stats">—</div>
+        <div class="side-note">公开 RSS · 个人离线阅读</div>
+      </div>
+    </aside>
+
+    <section class="list-pane">
+      <div class="list-head">
+        <div class="list-heading">
+          <div class="eyebrow" id="listEyebrow">全部</div>
+          <h1 id="listTitle">最新文章</h1>
+          <div class="list-sub" id="listSub">正在读取…</div>
+        </div>
+        <div class="view-seg" id="viewSeg">
+          <button data-view="all" class="active">全部</button>
+          <button data-view="unread">未读</button>
+          <button data-view="starred">收藏</button>
+        </div>
+      </div>
+      <div id="syncBanner" class="sync-banner hidden">
+        <div class="sync-row"><span id="syncTitle">正在同步订阅源…</span><span id="syncDetail"></span></div>
+        <div class="progress-track"><i id="syncProgress"></i></div>
+      </div>
+      <div class="article-list" id="articleList"></div>
+      <div class="list-foot">
+        <button id="loadMoreBtn" class="btn ghost hidden">加载更多</button>
+        <div id="listEnd" class="list-end"></div>
+      </div>
+    </section>
+
+    <section class="reader-pane" id="readerPane">
+      <div class="reader-empty" id="readerEmpty">
+        <div class="empty-seal">阁</div>
+        <div class="eyebrow">READING ROOM</div>
+        <h2>选一篇报道，慢慢读</h2>
+        <p>左侧是订阅源与文章。遇到外文报道，点“翻译”就能生成整篇中文，并可对照原文阅读。</p>
+        <div class="empty-keys">
+          <span><kbd>J</kbd><kbd>K</kbd> 切换文章</span>
+          <span><kbd>S</kbd> 收藏</span>
+          <span><kbd>T</kbd> 翻译</span>
+          <span><kbd>/</kbd> 搜索</span>
+        </div>
+        <div class="empty-note">所有文章与译文保存在本机，不上传任何内容。</div>
+      </div>
+      <article class="article-view hidden" id="articleView">
+        <div class="reader-bar">
+          <button id="backBtn" class="btn ghost small only-mobile"><svg class="icon"><use href="#i-arrow-left"/></svg><span>返回</span></button>
+          <div class="reader-actions">
+            <button id="fulltextBtn" class="btn ghost small"><svg class="icon"><use href="#i-doc"/></svg><span>抓取全文</span></button>
+            <button id="translateBtn" class="btn ghost small"><span>翻译</span></button>
+            <button id="starBtn" class="icon-btn" title="收藏" aria-label="收藏"><svg class="icon"><use href="#i-star"/></svg></button>
+            <button id="downloadBtn" class="icon-btn" title="下载与导出" aria-label="下载与导出"><svg class="icon"><use href="#i-download"/></svg></button>
+          </div>
+        </div>
+        <div id="translateBanner" class="banner hidden"></div>
+        <header class="article-head">
+          <div class="article-kicker" id="articleKicker"></div>
+          <h1 id="articleTitle"></h1>
+          <div class="translated-title hidden" id="articleTranslatedTitle"></div>
+          <div class="article-meta" id="articleMeta"></div>
+          <div class="article-controls">
+            <div class="lang-switch hidden" id="langSwitch">
+              <button data-mode="original">原文</button>
+              <button data-mode="bilingual">双语</button>
+              <button data-mode="translation">译文</button>
+            </div>
+            <a id="originalLink" class="external-link hidden" target="_blank" rel="noreferrer noopener">查看原文 <svg class="icon"><use href="#i-external"/></svg></a>
+          </div>
+        </header>
+        <div class="article-media hidden" id="articleMedia"></div>
+        <div class="article-body" id="articleBody"></div>
+        <footer class="article-foot">
+          <span>环球报阁 · 仅供个人离线阅读</span>
+          <span>版权归原作者与媒体所有</span>
+        </footer>
+      </article>
+    </section>
+  </main>
+</div>
+
+<div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<div id="sourcesModal" class="modal-layer hidden">
+  <div class="modal-card modal-wide" role="dialog" aria-modal="true" aria-labelledby="sourcesTitle">
+    <header class="modal-head">
+      <div>
+        <h2 id="sourcesTitle">订阅源</h2>
+        <p>管理已订阅媒体，或从源库中添加全球报刊。</p>
+      </div>
+      <button class="icon-btn modal-close" data-close="sourcesModal" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+    </header>
+    <div class="modal-tabs" id="sourcesTabs">
+      <button data-sources-tab="subscribed" class="active">已订阅 <span id="subCount">0</span></button>
+      <button data-sources-tab="catalog">源库 <span id="catCount">0</span></button>
+    </div>
+    <div class="modal-toolbar">
+      <div class="search-box compact">
+        <svg class="icon"><use href="#i-search"/></svg>
+        <input id="sourceFilterInput" type="search" placeholder="筛选名称、网址或说明" autocomplete="off">
+      </div>
+      <select id="sourceCategoryFilter" aria-label="按分类筛选"></select>
+      <select id="sourceRegionFilter" aria-label="按地区筛选"></select>
+      <button id="opmlImportBtn" class="btn ghost small">导入 OPML</button>
+      <button id="opmlExportBtn" class="btn ghost small">导出 OPML</button>
+      <input type="file" id="opmlFile" accept=".opml,.xml,text/xml,text/x-opml,application/xml" hidden>
+    </div>
+    <div class="modal-body" id="sourcesBody"></div>
+    <footer class="modal-foot" id="sourcesFoot">
+      <div class="custom-add">
+        <input id="customFeedUrl" type="text" placeholder="添加自定义 RSS / Atom 地址，例如 https://example.com/feed" autocomplete="off">
+        <select id="customFeedCategory" aria-label="自定义源分类"></select>
+        <button id="customFeedAdd" class="btn accent small">添加</button>
+      </div>
+      <div class="foot-note">只建议添加公开提供 RSS 的网站；需要登录或付费墙的内容可能抓取失败。</div>
+    </footer>
+  </div>
+</div>
+
+<div id="settingsModal" class="modal-layer hidden">
+  <div class="modal-card modal-medium" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <header class="modal-head">
+      <div>
+        <h2 id="settingsTitle">设置</h2>
+        <p>同步、翻译与本地数据。</p>
+      </div>
+      <button class="icon-btn modal-close" data-close="settingsModal" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+    </header>
+    <form id="settingsForm">
+      <div class="modal-body settings-body">
+        <section class="settings-section">
+          <h3>同步与网络</h3>
+          <div class="form-grid">
+            <label class="field">
+              <span>自动同步间隔</span>
+              <select id="setSyncInterval">
+                <option value="0">关闭自动同步</option>
+                <option value="15">每 15 分钟</option>
+                <option value="30">每 30 分钟</option>
+                <option value="60">每小时</option>
+                <option value="180">每 3 小时</option>
+                <option value="360">每 6 小时</option>
+                <option value="720">每 12 小时</option>
+                <option value="1440">每天</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>每个订阅源保留文章</span>
+              <input id="setRetention" type="number" min="20" max="2000" step="10">
+            </label>
+            <label class="field">
+              <span>每次每源最多新增</span>
+              <input id="setMaxItems" type="number" min="10" max="200" step="10">
+            </label>
+            <label class="field">
+              <span>HTTP 代理</span>
+              <input id="setProxy" type="text" placeholder="http://127.0.0.1:7890" autocomplete="off">
+              <small>留空表示直连；Clash / v2rayN 填混合端口即可。</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h3>翻译服务</h3>
+          <div class="form-grid">
+            <label class="field">
+              <span>翻译服务</span>
+              <select id="setProvider">
+                <option value="mymemory">MyMemory（免费，无需密钥）</option>
+                <option value="deepl">DeepL</option>
+                <option value="azure">Azure 认知服务</option>
+                <option value="baidu">百度翻译开放平台</option>
+                <option value="openai">OpenAI 兼容接口</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>目标语言</span>
+              <select id="setTargetLang">
+                <option value="zh-CN">简体中文</option>
+                <option value="zh-TW">繁體中文</option>
+              </select>
+            </label>
+            <label class="check-field span-2">
+              <input id="setAutoForeign" type="checkbox">
+              <span>打开外语文章时自动开始翻译</span>
+            </label>
+          </div>
+
+          <div class="provider-fields" data-provider="mymemory">
+            <label class="field"><span>联系邮箱（可选）</span><input id="setMymemoryEmail" type="email" placeholder="name@example.com" autocomplete="off"><small>填写后免费额度约 5 万字符/天；不填约 5 千字符/天。</small></label>
+            <p class="provider-note">MyMemory 无需注册，适合试用和短文章。长文可能遇到每日额度限制。</p>
+          </div>
+          <div class="provider-fields hidden" data-provider="deepl">
+            <label class="field"><span>DeepL 密钥</span><input id="setDeeplKey" type="password" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:fx" autocomplete="off"><small>免费版密钥以 :fx 结尾，会自动使用 api-free 端点。</small></label>
+            <p class="provider-note">DeepL API Free 每月约 50 万字符，翻译质量适合新闻。</p>
+          </div>
+          <div class="provider-fields hidden" data-provider="azure">
+            <div class="form-grid">
+              <label class="field"><span>Azure 密钥</span><input id="setAzureKey" type="password" autocomplete="off"></label>
+              <label class="field"><span>区域（Region）</span><input id="setAzureRegion" type="text" placeholder="eastasia" autocomplete="off"></label>
+            </div>
+            <p class="provider-note">多服务资源必须填写区域；免费层每月约 200 万字符。</p>
+          </div>
+          <div class="provider-fields hidden" data-provider="baidu">
+            <div class="form-grid">
+              <label class="field"><span>APPID</span><input id="setBaiduAppId" type="text" autocomplete="off"></label>
+              <label class="field"><span>密钥</span><input id="setBaiduKey" type="password" autocomplete="off"></label>
+            </div>
+            <p class="provider-note">需在百度翻译开放平台开通“通用文本翻译”服务。</p>
+          </div>
+          <div class="provider-fields hidden" data-provider="openai">
+            <div class="form-grid">
+              <label class="field span-2"><span>接口地址</span><input id="setOpenaiBase" type="text" placeholder="https://api.deepseek.com/v1" autocomplete="off"><small>填写到 /v1 即可，程序会自动追加 /chat/completions。</small></label>
+              <label class="field"><span>密钥</span><input id="setOpenaiKey" type="password" autocomplete="off"></label>
+              <label class="field"><span>模型</span><input id="setOpenaiModel" type="text" placeholder="deepseek-chat" autocomplete="off"></label>
+            </div>
+            <div class="preset-row">
+              <span>快速填入：</span>
+              <button type="button" class="chip" data-openai-preset="deepseek">DeepSeek</button>
+              <button type="button" class="chip" data-openai-preset="qwen">通义千问</button>
+              <button type="button" class="chip" data-openai-preset="moonshot">Moonshot</button>
+              <button type="button" class="chip" data-openai-preset="ollama">本地 Ollama</button>
+            </div>
+            <p class="provider-note">任何兼容 OpenAI /chat/completions 的服务均可。本地 Ollama 可不填密钥。</p>
+          </div>
+
+          <div class="test-row">
+            <button type="button" id="testTranslateBtn" class="btn ghost small">保存并测试翻译</button>
+            <span id="testResult" class="test-result"></span>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h3>图片与视频文字</h3>
+          <div class="form-grid">
+            <label class="field span-2">
+              <span>视觉模型（可选）</span>
+              <input id="setOcrModel" type="text" placeholder="例如 qwen-vl-plus、gpt-4o-mini、llava" autocomplete="off">
+              <small>填写支持图片输入的 OpenAI 兼容模型后，图片文字由该模型识别并翻译；留空则使用 Windows 自带 OCR（仅 Windows）。接口地址与密钥沿用上方“OpenAI 兼容接口”。</small>
+            </label>
+          </div>
+          <p class="provider-note">视频：正文里带字幕轨（WebVTT / SRT）的播放器会出现“翻译字幕”按钮；YouTube 等平台会尝试读取平台字幕，若平台拒绝下载，可点“粘贴字幕”把播放器里的字幕或文字稿粘贴进来翻译。</p>
+        </section>
+
+        <section class="settings-section">
+          <h3>数据与退出</h3>
+          <div class="data-path">
+            <span>数据目录</span>
+            <code id="setDataDir">—</code>
+          </div>
+          <p class="provider-note">文章、全文、译文与每日备份都保存在这里。复制整个 data 文件夹即可迁移。卸载或删除程序前请先备份。</p>
+          <div class="danger-row">
+            <button type="button" id="shutdownBtn" class="btn danger small">退出程序</button>
+            <span>退出后浏览器页面会断开，重新双击启动图标即可。</span>
+          </div>
+        </section>
+
+        <section class="legal-note">
+          本软件只聚合公开 RSS 与公开网页，供个人离线阅读；不绕过付费墙或登录限制，不重新分发受版权保护的内容。请遵守各媒体的使用条款。
+        </section>
+      </div>
+      <footer class="modal-foot form-foot">
+        <button type="button" class="btn ghost" data-close="settingsModal">取消</button>
+        <button type="submit" class="btn accent">保存设置</button>
+      </footer>
+    </form>
+  </div>
+</div>
+
+<div id="downloadModal" class="modal-layer hidden">
+  <div class="modal-card modal-small" role="dialog" aria-modal="true" aria-labelledby="downloadTitle">
+    <header class="modal-head">
+      <div>
+        <h2 id="downloadTitle">下载与导出</h2>
+        <p>保存为 Markdown 或独立 HTML，也可以打包当前列表。</p>
+      </div>
+      <button class="icon-btn modal-close" data-close="downloadModal" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+    </header>
+    <div class="modal-body">
+      <section class="download-section">
+        <h3>当前文章</h3>
+        <div class="form-grid">
+          <label class="field">
+            <span>内容</span>
+            <select id="downloadMode">
+              <option value="original">原文</option>
+              <option value="bilingual">双语对照</option>
+              <option value="translation">译文</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>格式</span>
+            <select id="downloadFormat">
+              <option value="md">Markdown (.md)</option>
+              <option value="html">独立网页 (.html)</option>
+            </select>
+          </label>
+        </div>
+        <a id="downloadArticleBtn" class="btn accent small" href="#" download>下载当前文章</a>
+        <p class="provider-note" id="downloadArticleNote">译文模式需要先生成翻译；没有译文时会保留原文。</p>
+      </section>
+      <section class="download-section">
+        <h3>打包当前列表</h3>
+        <div class="form-grid">
+          <label class="field">
+            <span>内容</span>
+            <select id="exportMode">
+              <option value="original">原文</option>
+              <option value="bilingual">双语对照</option>
+              <option value="translation">译文</option>
+            </select>
+          </label>
+        </div>
+        <button id="exportZipBtn" class="btn ghost small">导出 ZIP（最多 200 篇）</button>
+        <p class="provider-note">按当前分类、订阅源与筛选条件导出，内含目录、README 与每篇文章。</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="图片放大查看">
+  <div class="lightbox-bar">
+    <span class="lightbox-hint">滚轮缩放 · 拖动移动 · 双击复位 · Esc 关闭</span>
+    <div class="lightbox-actions">
+      <button type="button" class="lightbox-btn" data-zoom="out" title="缩小">−</button>
+      <button type="button" class="lightbox-btn" data-zoom="reset" id="lightboxScale">100%</button>
+      <button type="button" class="lightbox-btn" data-zoom="in" title="放大">+</button>
+      <button type="button" class="lightbox-btn close" data-close-lightbox title="关闭">×</button>
+    </div>
+  </div>
+  <div class="lightbox-stage" id="lightboxStage">
+    <img id="lightboxImg" alt="" draggable="false">
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

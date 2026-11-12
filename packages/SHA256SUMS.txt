@@ -1,0 +1,5 @@
+30cd9d504520e6e88842ae84908c9e9d6638beb56392854894adc8685bfb13ef *global-reading-room-1.0.0-ish.zip
+eedda7a9084d503e8582305af4181ad6185991f0a5a2460985be3437f75e1dab *global-reading-room-1.0.0-termux.zip
+93df5085fa3121fabd84bade0027493a9c2d64b52a7cc378b594fda95f1b1b84 *global-reading-room-1.0.0-windows-x64.zip
+a6d5685737d20de2ed26439b2a9f4f5efa56f629d29f647b13c81f134c8ae5c6 *global-reading-room-1.0.0-linux.tar.gz
+17525436dbf15e22292b4f67d48777a65710178e460b81b62fd7dc96c1799d9b *global-reading-room-1.0.0-macos.tar.gz

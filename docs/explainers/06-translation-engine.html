@@ -1,0 +1,188 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Global Reading Room — Field Guide</title><style>
+:root {
+  --bg: #030a13;
+  --panel: rgba(7, 20, 34, 0.86);
+  --ink: #e6f7ff;
+  --soft: #a9c7d9;
+  --muted: #6f93a9;
+  --cyan: #35e6ff;
+  --violet: #a78bfa;
+  --green: #45ffb0;
+  --line: rgba(88, 198, 255, 0.2);
+  --line-strong: rgba(88, 198, 255, 0.42);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; }
+body {
+  background:
+    radial-gradient(1100px 640px at 88% -12%, rgba(124, 58, 237, 0.22), transparent 62%),
+    radial-gradient(900px 560px at -4% 108%, rgba(0, 229, 255, 0.14), transparent 60%),
+    linear-gradient(180deg, #050d19 0%, #02060d 100%);
+  color: var(--ink);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(88, 198, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 198, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 30%, #000 30%, transparent 88%);
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.014) 0 1px, transparent 1px 4px);
+  pointer-events: none;
+}
+.page { position: relative; z-index: 2; height: 1000px; padding: 46px 58px 34px; display: flex; flex-direction: column; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: "Cascadia Code", Consolas, monospace; font-size: 12px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; }
+.brand { display: flex; align-items: center; gap: 14px; color: var(--soft); }
+.seal {
+  width: 38px; height: 38px; display: grid; place-items: center;
+  color: var(--cyan); border: 1px solid var(--line-strong);
+  font: 700 17px/1 "Segoe UI", sans-serif; letter-spacing: 0;
+  background: linear-gradient(145deg, rgba(53,230,255,0.12), rgba(167,139,250,0.08));
+  clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+}
+.brand b { color: var(--ink); font-weight: 600; letter-spacing: 0.12em; }
+.fig { color: var(--cyan); }
+.head { margin: 26px 0 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+.kicker { font-family: "Cascadia Code", Consolas, monospace; font-size: 12px; letter-spacing: 0.24em; color: var(--violet); text-transform: uppercase; margin-bottom: 8px; }
+h1 { margin: 0; font-size: 46px; line-height: 1.06; letter-spacing: -0.01em; font-weight: 680; }
+.sub { max-width: 620px; margin: 8px 0 0; color: var(--soft); font-size: 15.5px; line-height: 1.6; }
+.chiprow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 520px; }
+.chip {
+  padding: 6px 11px; border: 1px solid var(--line); border-radius: 2px;
+  color: var(--muted); font: 11px/1.2 "Cascadia Code", Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(53, 230, 255, 0.03);
+}
+.stage { flex: 1; min-height: 0; display: grid; grid-template-columns: 1.58fr 1fr; gap: 30px; }
+.shot-wrap { min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.shot-label { display: flex; justify-content: space-between; font: 10px/1 "Cascadia Code", Consolas, monospace; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+.shot {
+  position: relative; flex: 1; min-height: 0; overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: #02060c;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(53, 230, 255, 0.06) inset;
+}
+.shot::after {
+  content: ""; position: absolute; inset: 0;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+.shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+.shot.fit img { object-fit: contain; }
+.shot .crop-bottom img { object-position: bottom left; }
+.shot .crop-center img { object-position: center; }
+.shot .crop-right img { object-position: 100% 50%; }
+.corner { position: absolute; width: 18px; height: 18px; border-color: var(--cyan); z-index: 3; }
+.corner.tl { left: -1px; top: -1px; border-left: 2px solid; border-top: 2px solid; }
+.corner.tr { right: -1px; top: -1px; border-right: 2px solid; border-top: 2px solid; }
+.corner.bl { left: -1px; bottom: -1px; border-left: 2px solid; border-bottom: 2px solid; }
+.corner.br { right: -1px; bottom: -1px; border-right: 2px solid; border-bottom: 2px solid; }
+.calls { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+.call {
+  position: relative; padding: 16px 18px 15px 58px;
+  border: 1px solid var(--line); background: linear-gradient(120deg, rgba(8, 24, 40, 0.92), rgba(4, 12, 22, 0.8));
+}
+.call::before {
+  content: attr(data-n);
+  position: absolute; left: 16px; top: 15px;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border: 1px solid var(--line-strong); color: var(--cyan);
+  font: 600 12px/1 "Cascadia Code", Consolas, monospace;
+  background: rgba(53, 230, 255, 0.06);
+}
+.call h3 { margin: 0 0 5px; font-size: 16.5px; font-weight: 640; letter-spacing: 0.01em; }
+.call p { margin: 0; color: var(--soft); font-size: 13px; line-height: 1.55; }
+.call em { color: var(--cyan); font-style: normal; }
+.footer { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 20px; font: 10.5px/1.4 "Cascadia Code", Consolas, monospace; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+.footer .ok { color: var(--green); }
+.wide { display: flex; flex-direction: column; gap: 16px; }
+.wide .shot { min-height: 0; }
+.callrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.callrow .call { padding: 14px 15px 13px 15px; }
+.callrow .call::before { position: static; display: inline-grid; margin-bottom: 8px; }
+.callrow .call h3 { font-size: 14.5px; }
+.callrow .call p { font-size: 12px; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; flex: 1; min-height: 0; }
+.duo .shot { height: 100%; }
+.duo figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.duo figcaption { font: 10px/1.4 "Cascadia Code", Consolas, monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.tree { border: 1px solid var(--line); padding: 18px 20px; background: rgba(3, 10, 18, 0.7); font: 12.5px/1.9 "Cascadia Code", Consolas, monospace; color: var(--soft); }
+.tree b { color: var(--cyan); font-weight: 600; }
+.tree span { color: var(--muted); }
+.flow { flex: 1; display: grid; grid-template-columns: 1fr 1.2fr 1fr; grid-template-rows: auto 1fr auto; gap: 18px; align-items: stretch; }
+.node {
+  border: 1px solid var(--line-strong); background: linear-gradient(145deg, rgba(8,25,42,0.92), rgba(3,10,18,0.86));
+  padding: 18px 18px 16px; position: relative;
+}
+.node h3 { margin: 0 0 8px; font-size: 15px; color: var(--cyan); letter-spacing: 0.04em; }
+.node p, .node li { margin: 0; color: var(--soft); font-size: 12.5px; line-height: 1.7; }
+.node ul { margin: 0; padding-left: 16px; }
+.node small { display: block; margin-top: 8px; color: var(--muted); font: 10px/1.5 "Cascadia Code", Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+.node.core { border-color: var(--cyan); box-shadow: 0 0 36px rgba(53, 230, 255, 0.12); }
+.arch { flex: 1; display: grid; grid-template-columns: 1fr 56px 1.15fr 56px 1fr; grid-template-rows: 1fr auto auto; gap: 16px; align-items: stretch; }
+.arch .node { display: flex; flex-direction: column; }
+.arch .data-strip { grid-column: 1 / -1; }
+.arch .trustbox { grid-column: 1 / -1; }
+.arrow { display: grid; place-items: center; color: var(--cyan); font: 22px/1 "Cascadia Code", Consolas, monospace; }
+.data-strip { grid-column: 1 / -1; border: 1px dashed var(--line-strong); padding: 14px 18px; display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.data-strip b { color: var(--violet); font: 600 11px/1 "Cascadia Code", Consolas, monospace; letter-spacing: 0.16em; text-transform: uppercase; }
+.data-strip span { color: var(--soft); font: 12px/1.4 "Cascadia Code", Consolas, monospace; }
+.platforms { flex: 1; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-content: stretch; }
+.plat { border: 1px solid var(--line); background: linear-gradient(160deg, rgba(8,24,40,0.9), rgba(3,10,18,0.76)); padding: 20px 17px; display: flex; flex-direction: column; gap: 10px; }
+.plat h3 { margin: 0; font-size: 19px; color: var(--ink); }
+.plat .st { align-self: flex-start; padding: 4px 8px; font: 9.5px/1 "Cascadia Code", Consolas, monospace; letter-spacing: 0.12em; color: var(--green); border: 1px solid rgba(69,255,176,0.35); background: rgba(69,255,176,0.06); }
+.plat .st.exp { color: #ffd166; border-color: rgba(255,209,102,0.4); background: rgba(255,209,102,0.06); }
+.plat p { margin: 0; color: var(--soft); font-size: 12.5px; line-height: 1.6; }
+.plat code { display: block; margin-top: auto; padding: 9px 10px; background: rgba(0,0,0,0.35); border: 1px solid var(--line); color: var(--cyan); font: 11px/1.5 "Cascadia Code", Consolas, monospace; word-break: break-all; }
+.plat small { color: var(--muted); font-size: 10.5px; line-height: 1.5; }
+.plat ul { margin: 2px 0 0; padding-left: 15px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.plat li { margin: 0 0 3px; }
+.plat .lbl { margin-top: 4px; color: var(--muted); font: 9.5px/1 "Cascadia Code", Consolas, monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+.plat ol { margin: 0; padding-left: 16px; color: var(--soft); font-size: 11px; line-height: 1.6; }
+.plat ol li { margin: 0 0 2px; }
+.plat ol b { color: var(--cyan); font-weight: 600; }
+.note { margin-top: 12px; padding: 12px 16px; border-left: 2px solid var(--violet); background: rgba(167,139,250,0.06); color: var(--soft); font-size: 12.5px; line-height: 1.6; }
+.metric { display: flex; gap: 28px; margin-top: 18px; }
+.metric div { border-left: 1px solid var(--line); padding-left: 12px; }
+.metric b { display: block; color: var(--cyan); font: 600 22px/1.2 "Cascadia Code", Consolas, monospace; }
+.metric span { color: var(--muted); font: 10px/1.4 "Cascadia Code", Consolas, monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+</style></head><body><div class="page">
+
+<div class="topbar">
+  <div class="brand"><div class="seal">阁</div><span><b>GLOBAL READING ROOM</b> // FIELD GUIDE</span></div>
+  <div>LOCAL-FIRST NEWS INTELLIGENCE <span class="fig">FIG. 06 / 10</span></div>
+</div>
+<div class="head">
+  <div>
+    <div class="kicker">Configuration</div>
+    <h1>Translation Engine Room</h1>
+    <p class="sub">Five providers, one interface. Start free with MyMemory, add DeepL or Azure for volume, use Baidu for mainland access, or point the app at any OpenAI-compatible endpoint.</p>
+  </div>
+  <div class="chiprow"><span class="chip">MyMemory · free</span><span class="chip">DeepL · Azure</span><span class="chip">Baidu</span><span class="chip">OpenAI-compatible</span></div>
+</div>
+<div class="stage">
+  
+<div class="shot-wrap">
+  <div class="shot-label"><span>Live interface · settings</span><span>1600 × 1000 · DARK HUD</span></div>
+  <div class="shot fit"><img src="../images/ui-settings.png" style="object-position:top left" alt=""><span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span></div>
+</div>
+  <div class="calls">
+    <div class="call" data-n="01"><h3>Provider matrix</h3><p>MyMemory needs no key and is ideal for evaluation. DeepL, Azure, Baidu and OpenAI-compatible services are configured with credentials in the same panel.</p></div>
+    <div class="call" data-n="02"><h3>Simplified or traditional Chinese</h3><p>Choose Simplified or Traditional Chinese as the target. Every translation is cached per provider and language.</p></div>
+    <div class="call" data-n="03"><h3>Auto-translate foreign articles</h3><p>When enabled, opening a non-Chinese article starts a whole-article translation after half a second. Leave it off to translate on demand.</p></div>
+    <div class="call" data-n="04"><h3>Vision OCR model</h3><p>A multimodal OpenAI-compatible model can read images directly, returning both the original text and its translation in one request.</p></div>
+    <div class="call" data-n="05"><h3>Keys stay local</h3><p>Credentials are stored in your data folder, never transmitted anywhere except the provider you chose. Protect the folder like any other document archive.</p></div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>GLOBAL READING ROOM · LOCAL-FIRST NEWS INTELLIGENCE</span>
+  <span class="ok">FIG. 06 · TRANSLATION ENGINE</span>
+</div></div></body></html>

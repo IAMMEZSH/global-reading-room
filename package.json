@@ -1,0 +1,13 @@
+{
+  "name": "global-reading-room",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Global Reading Room (环球报阁) — a zero-dependency local news reader with RSS aggregation, full-text capture, whole-article translation, image OCR, subtitle translation and offline export.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
