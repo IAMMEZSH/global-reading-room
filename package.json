@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Global Reading Room (环球报阁) — a zero-dependency local news reader with RSS aggregation, full-text capture, whole-article translation, image OCR, subtitle translation and offline export.",
+  "license": "MIT",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

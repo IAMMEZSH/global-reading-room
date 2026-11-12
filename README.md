@@ -340,6 +340,14 @@ The full manual has a longer troubleshooting matrix, provider setup walkthroughs
 
 ---
 
+## License
+
+MIT © 2026 IAMMEZSH. See [LICENSE](LICENSE).
+
+The Windows portable package also contains the official Node.js runtime, which is distributed under its own license (`runtime/NODE-LICENSE.txt`).
+
+---
+
 ## Credits
 
 Built as a single zero-dependency Node.js application. The Windows portable build redistributes the official Node.js runtime under the Node.js license; no other third-party libraries are bundled. All field-guide plates and interface screenshots were produced from the running application.
