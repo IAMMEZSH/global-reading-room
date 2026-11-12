@@ -5,6 +5,22 @@ Public RSS and Atom in, full Chinese translations, offline exports, image OCR an
 
 Version 1.0.0 · Node.js ≥ 20 · Windows · Linux · macOS · Android (Termux) · iPhone / iPad (iSH)
 
+---
+
+## Download
+
+**Windows 10 / 11 users:** [**download the portable Windows ZIP**](downloads/windows/global-reading-room-1.0.0-windows-x64.zip), unzip it, then double-click **`Start Global Reading Room.vbs`**. No installer, no admin rights, Node.js is bundled.
+
+| Platform | Package | Launcher |
+| --- | --- | --- |
+| **Windows 10 / 11 (x64)** | [Windows ZIP](downloads/windows/global-reading-room-1.0.0-windows-x64.zip) | `Start Global Reading Room.vbs` |
+| **Linux** | [Linux tar.gz](downloads/linux/global-reading-room-1.0.0-linux.tar.gz) | `start.sh` |
+| **macOS 12+** | [macOS tar.gz](downloads/macos/global-reading-room-1.0.0-macos.tar.gz) | `Start Global Reading Room.command` |
+| **Android — Termux** | [Termux ZIP](downloads/android-termux/global-reading-room-1.0.0-termux.zip) | `install-termux.sh` |
+| **iPhone / iPad — iSH** | [iSH ZIP](downloads/iphone-ipad-ish/global-reading-room-1.0.0-ish.zip) | `start-ish.sh` |
+
+Each platform folder contains its own `README.md` and `SHA256.txt`. All hashes are also in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt), and the same five packages are attached to the [v1.0.0 release](../../releases/tag/v1.0.0).
+
 ![Global Reading Room command deck](docs/images/guide-01-command-deck.png)
 
 ---
@@ -79,19 +95,7 @@ The complete operating manual — installation, every setting, provider setup, O
 
 ## Quick start
 
-### Download by platform
-
-Each platform has its own download folder with a README and a SHA256 checksum. GitHub and GitCode use the same layout.
-
-| Platform | Runtime | Launcher | Package |
-| --- | --- | --- | --- |
-| **Windows 10 / 11 (x64)** | Bundled Node.js | `Start Global Reading Room.vbs` | [Windows ZIP](downloads/windows/global-reading-room-1.0.0-windows-x64.zip) |
-| **Linux** | Node.js 20+ | `start.sh` | [Linux tar.gz](downloads/linux/global-reading-room-1.0.0-linux.tar.gz) |
-| **macOS 12+** | Node.js 20+ | `Start Global Reading Room.command` | [macOS tar.gz](downloads/macos/global-reading-room-1.0.0-macos.tar.gz) |
-| **Android — Termux** | Termux installs Node.js | `install-termux.sh` | [Termux ZIP](downloads/android-termux/global-reading-room-1.0.0-termux.zip) |
-| **iPhone / iPad — iSH** | iSH installs Node.js | `start-ish.sh` | [iSH ZIP](downloads/iphone-ipad-ish/global-reading-room-1.0.0-ish.zip) |
-
-All five packages are also listed in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt).
+Package choices and checksums are listed in [Download](#download) at the top of this page.
 
 ### Windows 10 / 11 (x64) — portable, click to run
 
