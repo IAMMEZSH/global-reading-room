@@ -61,6 +61,24 @@ function httpError(message, status = 400, code = '') {
   return error;
 }
 
+async function fetchHtmlWithRetry(url, options) {
+  let lastError;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      return await httpRequest(url, {
+        ...options,
+        timeout: attempt === 0 ? options.timeout : Math.round(options.timeout * 1.5),
+      });
+    } catch (error) {
+      lastError = error;
+      const transient = ['ETIMEDOUT', 'ECONNRESET', 'EAI_AGAIN'].includes(error.code);
+      if (!transient || attempt === 1) break;
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+    }
+  }
+  throw lastError;
+}
+
 function attachmentHeader(filename) {
   const ascii = String(filename).replace(/[^\x20-\x7e]/g, '_').replace(/["\\]/g, '_');
   const encoded = encodeURIComponent(filename).replace(/['()*]/g, (char) => `%${char.charCodeAt(0).toString(16).toUpperCase()}`);
@@ -1035,7 +1053,7 @@ async function startServer(options = {}) {
         const settings = store.getSettings();
         let response;
         try {
-          response = await httpRequest(record.link, {
+          response = await fetchHtmlWithRetry(record.link, {
             proxy: settings.proxy || undefined,
             timeout: 30000,
             maxBytes: 12 * 1024 * 1024,
