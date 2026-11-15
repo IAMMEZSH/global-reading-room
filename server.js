@@ -23,6 +23,10 @@ const {
 } = require('./lib/exporters');
 
 const PUBLIC_DIR = path.join(__dirname, 'public');
+const APP_VERSION = require('./package.json').version;
+const RELEASE_REPO = 'IAMMEZSH/global-reading-room';
+const GITCODE_PROJECT = 'gcw_So3EkhfR/global-reading-room';
+const UPDATE_CACHE_MS = 30 * 60 * 1000;
 const TARGET_LANGS = new Set(['zh-CN', 'zh-TW']);
 const ALLOWED_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]', '::1']);
 const MIME = {
@@ -43,7 +47,7 @@ const SECURITY_HEADERS = {
     "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://player.bilibili.com https://www.dailymotion.com https://geo.dailymotion.com",
     "style-src 'self' 'unsafe-inline'",
     "script-src 'self'",
-    "connect-src 'self'",
+    "connect-src 'self' https: http://127.0.0.1:* http://localhost:*",
     "font-src 'self'",
     "frame-ancestors 'none'",
     "base-uri 'none'",
@@ -150,6 +154,21 @@ function progressOf(job) {
   job.updatedAt = nowIso();
 }
 
+function versionParts(value) {
+  const match = String(value || '').match(/(\d+)\.(\d+)\.(\d+)/);
+  return match ? match.slice(1).map(Number) : null;
+}
+
+function versionIsNewer(latest, current) {
+  const a = versionParts(latest);
+  const b = versionParts(current);
+  if (!a || !b) return false;
+  for (let i = 0; i < 3; i += 1) {
+    if (a[i] !== b[i]) return a[i] > b[i];
+  }
+  return false;
+}
+
 async function startServer(options = {}) {
   const dataDir = path.resolve(options.dataDir || process.env.GRR_DATA_DIR || path.join(__dirname, 'data'));
   const store = new Store(dataDir);
@@ -162,6 +181,42 @@ async function startServer(options = {}) {
   let closingPromise = null;
   let closed = false;
   const exitOnShutdown = Boolean(options.exitOnShutdown);
+  let updateCache = { at: 0, data: null };
+
+  async function checkForUpdate() {
+    if (updateCache.data && Date.now() - updateCache.at < UPDATE_CACHE_MS) return updateCache.data;
+    const fallback = {
+      ok: false,
+      current: APP_VERSION,
+      latest: '',
+      update_available: false,
+      releases_url: `https://github.com/${RELEASE_REPO}/releases`,
+      gitcode_url: `https://gitcode.com/${GITCODE_PROJECT}/releases`,
+    };
+    try {
+      const response = await fetch(`https://api.github.com/repos/${RELEASE_REPO}/releases/latest`, {
+        headers: { Accept: 'application/vnd.github+json', 'User-Agent': `global-reading-room/${APP_VERSION}` },
+        signal: AbortSignal.timeout(4000),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const release = await response.json();
+      const latest = String(release.tag_name || '').replace(/^v/i, '');
+      const data = {
+        ok: true,
+        current: APP_VERSION,
+        latest,
+        update_available: versionIsNewer(latest, APP_VERSION),
+        releases_url: String(release.html_url || `https://github.com/${RELEASE_REPO}/releases`),
+        gitcode_url: `https://gitcode.com/${GITCODE_PROJECT}/releases/v${latest}`,
+        published_at: release.published_at || '',
+      };
+      updateCache = { at: Date.now(), data };
+      return data;
+    } catch {
+      updateCache = { at: Date.now(), data: fallback };
+      return fallback;
+    }
+  }
 
   function sendJson(res, status, data) {
     const body = Buffer.from(JSON.stringify(data), 'utf8');
@@ -603,13 +658,18 @@ async function startServer(options = {}) {
       sendJson(res, 200, {
         ok: true,
         app: '环球报阁',
-        version: require('./package.json').version,
+        version: APP_VERSION,
         uptimeSeconds: Math.round(process.uptime()),
         dataDir,
         articles: store.db.articles.length,
         sources: store.db.sources.length,
         lastSyncAt: store.db.meta.lastSyncAt || '',
       });
+      return;
+    }
+
+    if (method === 'GET' && pathname === '/api/update') {
+      sendJson(res, 200, await checkForUpdate());
       return;
     }
 

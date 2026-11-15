@@ -1,5 +1,5 @@
-6e565bbf08533c0458c368761df0ee8b82f08754d255322333e699f02b58ab99 *windows/global-reading-room-1.0.0-windows-x64.zip
-3450fcff7cc7b15a9a409afb060a02d7afc413d9bd21ea95299b148662482db9 *linux/global-reading-room-1.0.0-linux.tar.gz
-bc02cdb44b93ad5fc070b3a22d1f3a4d80365171cebb5e2781b8a7d3e565b902 *macos/global-reading-room-1.0.0-macos.tar.gz
-80ac6907bc0fe590b5598b19e383d668785bdb99c3947ba4fbcf7737f27d80bc *android-termux/global-reading-room-1.0.0-termux.zip
-7b5ad6000f23159817bc2464b90ff760318596c0f6cab40948943493ae7598ff *iphone-ipad-ish/global-reading-room-1.0.0-ish.zip
+98a4da091248c360b3f984e345e6aa96910d5a06d9ba72a69bc6c4ab08a31355 *android-termux/global-reading-room-1.2.0-termux.zip
+239ad737f6d7d2a8726fbd4be7ea815bafc2cd04e3a141a886b5eb464492e4c7 *iphone-ipad-ish/global-reading-room-1.2.0-ish.zip
+f53ccf42f8376e7e3479e2d6215ea295df1daa4b88eae3a76b2171d7c4590bf3 *linux/global-reading-room-1.2.0-linux.tar.gz
+732af67ef8f82e35e51e7138bb96f9080feb85e2a013c56c05400ea46af58065 *macos/global-reading-room-1.2.0-macos.tar.gz
+f01353584d05ebdcd6e3671eb92f110332e3f8aea4b5152db588db229807889b *windows/global-reading-room-1.2.0-windows-x64.zip

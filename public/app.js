@@ -2000,9 +2000,367 @@ function bindEvents() {
   });
 }
 
+/* ---------------- 群聊 (默认关闭; 连接自建 TenSaint73OS 中继) ---------------- */
+const CHAT_STORE_KEY = 'grr-chat';
+// 脏话、涉黄、涉赌、涉毒都算不文明字符; 与中继服务端同一份规则，客户端再兜一层。
+const CHAT_BANNED = [
+  '傻逼', '煞笔', '沙比', '脑残', '智障', '贱人', '婊子', '王八蛋', '畜生', '狗东西',
+  '操你妈', '草你妈', '草泥马', '他妈的', '弄死你', '杀了你', '强奸', '轮奸',
+  '色情', '黄色网站', '黄片', '毛片', '成人视频', '裸聊', '约炮', '嫖娼', '卖淫', '援交',
+  '一夜情', '淫秽', '淫荡', '自慰', '手淫', '口交', '肛交', '乳交', '鸡巴', '肉棒',
+  '赌博', '赌场', '赌球', '赌钱', '博彩', '六合彩', '时时彩', '百家乐', '老虎机', '下注', '押注',
+  '毒品', '吸毒', '贩毒', '冰毒', '海洛因', '大麻', '可卡因', '摇头丸', 'K粉', '麻古', '制毒',
+  'fuck', 'fucking', 'motherfucker', 'shit', 'bitch', 'asshole', 'bastard', 'cunt',
+  'dickhead', 'whore', 'slut', 'nigger', 'nigga', 'faggot', 'retard',
+  'porn', 'porno', 'pornhub', 'sex', 'sexting', 'nude', 'naked', 'xxx',
+  'casino', 'gambling', 'gamble', 'betting', 'blackjack', 'roulette', 'baccarat',
+  'heroin', 'cocaine', 'meth', 'marijuana', 'cannabis', 'fentanyl', 'ecstasy', 'ketamine', 'opium', 'drugs',
+];
+const CHAT_BANNED_RE = new RegExp(`(${CHAT_BANNED
+  .map((word) => (/[\u4e00-\u9fff]/.test(word)
+    ? word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    : `\\b${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`))
+  .sort((a, b) => b.length - a.length)
+  .join('|')})`, 'gi');
+
+function chatMask(text) {
+  return String(text == null ? '' : text).replace(CHAT_BANNED_RE, (match) => '*'.repeat(match.length));
+}
+
+function chatLoadConfig() {
+  const fallback = { url: '', token: '', name: '', enabled: false };
+  try {
+    const raw = JSON.parse(localStorage.getItem(CHAT_STORE_KEY) || '{}');
+    return {
+      url: String(raw.url || ''),
+      token: String(raw.token || ''),
+      name: String(raw.name || ''),
+      enabled: Boolean(raw.enabled),
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function chatSaveConfig(cfg) {
+  try { localStorage.setItem(CHAT_STORE_KEY, JSON.stringify(cfg)); } catch { /* 存储不可用时只在本次会话生效 */ }
+}
+
+function chatNormalizeUrl(raw) {
+  const value = String(raw || '').trim().replace(/\/+$/, '');
+  if (!value) return '';
+  if (/^https:\/\/[^\s]+$/i.test(value)) return value;
+  if (/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/i.test(value)) return value;
+  return '';
+}
+
+const chatRuntime = {
+  cfg: chatLoadConfig(),
+  timer: null,
+  lastId: 0,
+  open: false,
+  sending: false,
+  seen: new Set(),
+};
+
+function chatSetStatus(text, tone = '') {
+  const node = $('#chatStatus');
+  if (!node) return;
+  node.textContent = text;
+  node.className = `chat-status${tone ? ` ${tone}` : ''}`;
+}
+
+function chatMessageNode(message) {
+  const wrap = document.createElement('div');
+  const mine = Boolean(message.name) && message.name === chatRuntime.cfg.name;
+  wrap.className = `chat-msg${mine ? ' mine' : ''}`;
+  const meta = document.createElement('div');
+  meta.className = 'chat-meta';
+  const name = document.createElement('span');
+  name.className = 'chat-name';
+  name.textContent = chatMask(message.name || '访客');
+  const via = document.createElement('span');
+  via.className = 'chat-via';
+  via.textContent = message.via === 'relay' ? '中继' : '本机';
+  const time = document.createElement('span');
+  time.textContent = timeAgo(message.at);
+  meta.append(name, via, time);
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble';
+  bubble.textContent = chatMask(message.text);
+  wrap.append(meta, bubble);
+  return wrap;
+}
+
+function chatAppend(message) {
+  if (!message || chatRuntime.seen.has(message.id)) return;
+  chatRuntime.seen.add(message.id);
+  if (Number(message.id) > chatRuntime.lastId) chatRuntime.lastId = Number(message.id);
+  const log = $('#chatLog');
+  if (!log) return;
+  const empty = log.querySelector('.chat-empty');
+  if (empty) empty.remove();
+  const nearBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 90;
+  log.appendChild(chatMessageNode(message));
+  if (nearBottom) log.scrollTop = log.scrollHeight;
+}
+
+function chatStopPolling() {
+  if (chatRuntime.timer) clearTimeout(chatRuntime.timer);
+  chatRuntime.timer = null;
+}
+
+function chatSetCivilityState(online) {
+  const panel = $('#chatPanel');
+  if (panel) panel.classList.toggle('offline', !online);
+  const input = $('#chatInput');
+  const send = $('#chatSendBtn');
+  if (input) input.disabled = !online;
+  if (send) send.disabled = !online;
+}
+
+async function chatRelay(path, options = {}) {
+  const cfg = chatRuntime.cfg;
+  const url = `${chatNormalizeUrl(cfg.url)}${path}`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    return await fetch(url, {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${cfg.token}`,
+        'Content-Type': 'application/json',
+        ...(options.headers || {}),
+      },
+      signal: controller.signal,
+      cache: 'no-store',
+    });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function chatSchedulePoll() {
+  chatStopPolling();
+  if (!chatRuntime.open || !chatRuntime.cfg.enabled) return;
+  chatRuntime.timer = setTimeout(chatPoll, 3500);
+}
+
+async function chatPoll() {
+  chatRuntime.timer = null;
+  if (!chatRuntime.open || !chatRuntime.cfg.enabled) return;
+  if (!chatRuntime.cfg.url || !chatRuntime.cfg.token) {
+    chatSetStatus('未配置', 'error');
+    return;
+  }
+  try {
+    const response = await chatRelay(`/api/chat/relay/messages?after=${chatRuntime.lastId}`);
+    if (response.status === 401) {
+      chatSetStatus('令牌无效或已吊销', 'error');
+      chatSetCivilityState(false);
+      return;
+    }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    (data.messages || []).forEach(chatAppend);
+    chatSetStatus(`已连接 · ${data.room || '大厅'}`, 'online');
+    chatSetCivilityState(true);
+    chatSchedulePoll();
+  } catch (error) {
+    chatSetStatus('连接中断，稍后重试', 'error');
+    chatSetCivilityState(false);
+    chatSchedulePoll();
+  }
+}
+
+async function chatTestConnection() {
+  const cfg = chatReadForm();
+  if (!cfg) return;
+  const saved = chatRuntime.cfg;
+  chatRuntime.cfg = cfg;
+  chatSetStatus('测试中…');
+  try {
+    const response = await chatRelay('/api/chat/relay/info');
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      chatSetStatus(response.status === 401 ? '令牌无效或已吊销' : `连接失败 HTTP ${response.status}`, 'error');
+      toast(data.error || '中继拒绝了这次连接', 'error');
+      return;
+    }
+    chatSetStatus(`已连接 · ${data.room || '大厅'}`, 'online');
+    toast(`中继可用：房间「${data.room || '大厅'}」，已有 ${data.messages || 0} 条消息。`, 'success');
+  } catch (error) {
+    chatSetStatus('连接失败', 'error');
+    toast(`连接失败：${error.name === 'AbortError' ? '请求超时' : error.message}`, 'error');
+  } finally {
+    chatRuntime.cfg = saved;
+  }
+}
+
+function chatReadForm() {
+  const url = chatNormalizeUrl($('#chatRelayUrl').value);
+  const token = $('#chatToken').value.trim();
+  const name = $('#chatName').value.trim().slice(0, 24) || '环球报阁读者';
+  const enabled = $('#chatEnabled').checked;
+  if (enabled && !url) {
+    toast('中继地址只支持 https，或本机回环 http://127.0.0.1 / http://localhost。', 'error');
+    return null;
+  }
+  if (enabled && !token) {
+    toast('请填写房间令牌。', 'error');
+    return null;
+  }
+  return { url, token, name, enabled };
+}
+
+function chatFillForm() {
+  const cfg = chatRuntime.cfg;
+  $('#chatRelayUrl').value = cfg.url;
+  $('#chatToken').value = cfg.token;
+  $('#chatName').value = cfg.name || '环球报阁读者';
+  $('#chatEnabled').checked = cfg.enabled;
+}
+
+function chatSaveSettings() {
+  const cfg = chatReadForm();
+  if (!cfg) return;
+  chatRuntime.cfg = cfg;
+  chatSaveConfig(cfg);
+  $('#chatSetup').classList.add('hidden');
+  if (!cfg.enabled) {
+    chatStopPolling();
+    chatSetStatus('未启用');
+    chatSetCivilityState(false);
+    toast('群聊已关闭，不会发出任何请求。', 'info');
+    return;
+  }
+  chatSetStatus('连接中…');
+  chatSetCivilityState(false);
+  chatPoll();
+  chatSchedulePoll();
+  toast('群聊设置已保存，只保存在这台设备。', 'success');
+}
+
+function chatOpenPanel() {
+  chatRuntime.open = true;
+  $('#chatPanel').classList.remove('hidden');
+  $('#chatBtn').classList.add('active');
+  chatFillForm();
+  chatSetCivilityState(false);
+  const cfg = chatRuntime.cfg;
+  if (cfg.enabled && cfg.url && cfg.token) {
+    chatSetStatus('连接中…');
+    chatPoll();
+    chatSchedulePoll();
+  } else {
+    chatSetStatus('未启用');
+    $('#chatSetup').classList.remove('hidden');
+  }
+  setTimeout(() => $('#chatInput').focus(), 60);
+}
+
+function chatClosePanel() {
+  chatRuntime.open = false;
+  $('#chatPanel').classList.add('hidden');
+  $('#chatBtn').classList.remove('active');
+  chatStopPolling();
+  chatSetStatus('已暂停');
+  chatSetCivilityState(false);
+}
+
+async function chatSendMessage(event) {
+  event.preventDefault();
+  if (chatRuntime.sending) return;
+  const input = $('#chatInput');
+  const text = chatMask(input.value.trim());
+  if (!text) return;
+  if (!chatRuntime.cfg.enabled) {
+    toast('群聊未启用，先在设置里打开。', 'warn');
+    return;
+  }
+  chatRuntime.sending = true;
+  $('#chatSendBtn').disabled = true;
+  try {
+    const response = await chatRelay('/api/chat/relay/messages', {
+      method: 'POST',
+      body: JSON.stringify({ name: chatRuntime.cfg.name || '环球报阁读者', text }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || `HTTP ${response.status}`);
+    input.value = '';
+    $('#chatCount').textContent = '0 / 2000';
+    if (data.message) chatAppend(data.message);
+    chatSetStatus(`已连接 · ${data.room || '大厅'}`, 'online');
+    chatSetCivilityState(true);
+  } catch (error) {
+    toast(`发送失败：${error.message}`, 'error');
+  } finally {
+    chatRuntime.sending = false;
+    $('#chatSendBtn').disabled = false;
+  }
+}
+
+function bindChat() {
+  $('#chatBtn').addEventListener('click', () => {
+    if (chatRuntime.open) chatClosePanel();
+    else chatOpenPanel();
+  });
+  $('#chatCloseBtn').addEventListener('click', chatClosePanel);
+  $('#chatSettingsBtn').addEventListener('click', () => {
+    $('#chatSetup').classList.toggle('hidden');
+  });
+  $('#chatSaveBtn').addEventListener('click', chatSaveSettings);
+  $('#chatTestBtn').addEventListener('click', chatTestConnection);
+  $('#chatForm').addEventListener('submit', chatSendMessage);
+  $('#chatInput').addEventListener('input', () => {
+    $('#chatCount').textContent = `${$('#chatInput').value.length} / 2000`;
+  });
+  $('#chatInput').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
+      event.preventDefault();
+      $('#chatForm').requestSubmit();
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && chatRuntime.open && !$('#chatPanel').classList.contains('hidden')) {
+      chatClosePanel();
+    }
+  });
+}
+
+async function checkForUpdate() {
+  try {
+    const response = await fetch('/api/update', { cache: 'no-store' });
+    const data = await response.json();
+    if (!data || !data.update_available || !data.latest) return;
+    let dismissed = '';
+    try { dismissed = localStorage.getItem('grr-update-dismissed') || ''; } catch { /* noop */ }
+    if (dismissed === data.latest) return;
+    $('#updateNoticeTitle').textContent = `发现新版本 v${data.latest}`;
+    $('#updateNoticeBody').textContent = `当前运行 v${data.current}。更新不需要搬动数据：替换程序文件时保留 data 目录即可。`;
+    const github = $('#updateGithub');
+    const gitcode = $('#updateGitcode');
+    github.href = data.releases_url || `https://github.com/IAMMEZSH/global-reading-room/releases`;
+    if (data.gitcode_url) {
+      gitcode.href = data.gitcode_url;
+      gitcode.hidden = false;
+    } else {
+      gitcode.hidden = true;
+    }
+    $('#updateNoticeClose').addEventListener('click', () => {
+      try { localStorage.setItem('grr-update-dismissed', data.latest); } catch { /* noop */ }
+      $('#updateNotice').hidden = true;
+    });
+    $('#updateNotice').hidden = false;
+  } catch {
+    /* Offline or the release API is unreachable: no banner. */
+  }
+}
+
 async function init() {
   initTheme();
   bindEvents();
+  bindChat();
   bindMediaEvents();
   showListSkeleton();
   try {
@@ -2014,6 +2372,7 @@ async function init() {
     toast(`无法连接本地服务：${error.message}`, 'error', 8000);
     return;
   }
+  checkForUpdate();
   await loadArticles({ reset: true });
   setTimeout(detectActiveSync, 1600);
   setInterval(detectActiveSync, 8000);

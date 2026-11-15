@@ -3,7 +3,7 @@
 There is no native APK. This package runs the same application inside Termux from F-Droid.
 
 ```bash
-unzip global-reading-room-1.0.0-termux.zip -d global-reading-room
+unzip global-reading-room-1.2.0-termux.zip -d global-reading-room
 cd global-reading-room
 bash install-termux.sh
 ```

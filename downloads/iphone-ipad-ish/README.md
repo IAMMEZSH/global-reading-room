@@ -4,7 +4,7 @@ There is no IPA. This package runs the application inside iSH, which emulates Li
 
 ```sh
 apk add nodejs unzip
-unzip global-reading-room-1.0.0-ish.zip -d global-reading-room
+unzip global-reading-room-1.2.0-ish.zip -d global-reading-room
 cd global-reading-room
 sh start-ish.sh
 ```
