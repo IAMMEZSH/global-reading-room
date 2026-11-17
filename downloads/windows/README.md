@@ -2,7 +2,7 @@
 
 Portable, click to run. The package bundles the official Node.js runtime, so nothing is installed and no registry keys are written.
 
-1. Download `global-reading-room-1.2.0-windows-x64.zip` and extract it.
+1. Download `global-reading-room-1.3.0-windows-x64.zip` and extract it.
 2. Open the extracted folder.
 3. Double-click `Start Global Reading Room.vbs`.
 

@@ -148,7 +148,7 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
 
 <header class="top">
   <div class="brand"><div class="seal">阁</div><span><b>GLOBAL READING ROOM</b> // OPERATOR MANUAL</span></div>
-  <div class="meta">VERSION 1.2.0 · 2026-11-15<br><span>LOCAL-FIRST NEWS INTELLIGENCE</span></div>
+  <div class="meta">VERSION 1.3.0 · 2026-11-18<br><span>LOCAL-FIRST NEWS INTELLIGENCE</span></div>
 </header>
 
 <nav class="toc" id="toc" aria-label="Contents">
@@ -170,15 +170,14 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
   <a href="#images">10 · Images &amp; OCR</a>
   <a href="#video">11 · Video &amp; subtitles</a>
   <a href="#export">12 · Exports</a>
-  <a href="#groupchat">13 · Group chat</a>
-  <a href="#settings">14 · Settings</a>
-  <a href="#data">15 · Data &amp; backup</a>
-  <a href="#security">16 · Security</a>
-  <a href="#api">17 · Local API</a>
-  <a href="#troubleshooting">18 · Troubleshooting</a>
-  <a href="#legal">19 · Legal</a>
-  <a href="#faq">20 · FAQ</a>
-  <a href="#appendix">21 · Appendices</a>
+  <a href="#settings">13 · Settings</a>
+  <a href="#data">14 · Data &amp; backup</a>
+  <a href="#security">15 · Security</a>
+  <a href="#api">16 · Local API</a>
+  <a href="#troubleshooting">17 · Troubleshooting</a>
+  <a href="#legal">18 · Legal</a>
+  <a href="#faq">19 · FAQ</a>
+  <a href="#appendix">20 · Appendices</a>
 </nav>
 
 <main>
@@ -267,7 +266,7 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
   <div class="platform" id="install-win">
     <div class="ph"><h3>Windows 10 / 11 · portable ZIP</h3><span class="tag">Click to run</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.2.0-windows-x64.zip</code>. It contains the application, the official Node.js runtime and two launchers.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-windows-x64.zip</code>. It contains the application, the official Node.js runtime and two launchers.</p>
       <ol class="steps">
         <li>Right-click the ZIP → <strong>Extract All…</strong> and choose a normal folder such as <code>C:\Global Reading Room</code>. Do not run it from inside the ZIP preview.</li>
         <li>Open the extracted folder. You should see <code>Start Global Reading Room.vbs</code>, <code>server.js</code>, <code>runtime\</code>, <code>public\</code> and <code>lib\</code>.</li>
@@ -284,9 +283,9 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
   <div class="platform" id="install-linux">
     <div class="ph"><h3>Linux</h3><span class="tag">Source ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.2.0-linux.tar.gz</code>. Requires Node.js 20+ from your distribution, NodeSource, nvm or a similar source.</p>
-      <pre><code>tar -xzf global-reading-room-1.2.0-linux.tar.gz
-cd global-reading-room-1.2.0
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-linux.tar.gz</code>. Requires Node.js 20+ from your distribution, NodeSource, nvm or a similar source.</p>
+      <pre><code>tar -xzf global-reading-room-1.3.0-linux.tar.gz
+cd global-reading-room-1.3.0
 chmod +x start.sh
 ./start.sh</code></pre>
       <p><code>start.sh</code> changes to its own folder, starts <code>server.js</code> and lets the server open your browser. On a headless server or a minimal window manager, use:</p>
@@ -300,10 +299,10 @@ chmod +x start.sh
   <div class="platform" id="install-mac">
     <div class="ph"><h3>macOS 12+</h3><span class="tag">Source ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.2.0-macos.tar.gz</code>. Install Node.js first, for example with Homebrew:</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-macos.tar.gz</code>. Install Node.js first, for example with Homebrew:</p>
       <pre><code>brew install node
-tar -xzf global-reading-room-1.2.0-macos.tar.gz
-cd global-reading-room-1.2.0</code></pre>
+tar -xzf global-reading-room-1.3.0-macos.tar.gz
+cd global-reading-room-1.3.0</code></pre>
       <p>Double-click <strong>Start Global Reading Room.command</strong>. The first time, macOS Gatekeeper may block it: right-click the file → <strong>Open</strong> → <strong>Open</strong> again. You can also run <code>./start-mac.sh</code> from Terminal.</p>
       <p>Apple silicon and Intel are both supported because the app itself is architecture-neutral JavaScript. The launcher uses the system Node.js you installed.</p>
       <div class="note">If the browser does not open, visit <code>http://127.0.0.1:7317</code> manually. The terminal window must stay open; closing it stops the server.</div>
@@ -313,12 +312,12 @@ cd global-reading-room-1.2.0</code></pre>
   <div class="platform" id="install-termux">
     <div class="ph"><h3>Android · Termux</h3><span class="tag">Termux ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.2.0-termux.zip</code>. There is no APK. Termux provides a real Linux userland and runs the same Node.js source.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-termux.zip</code>. There is no APK. Termux provides a real Linux userland and runs the same Node.js source.</p>
       <ol class="steps">
         <li>Install <strong>Termux</strong> from F-Droid (recommended) or the Termux GitHub releases. The Play Store build is outdated and not recommended.</li>
         <li>Copy the ZIP to the phone, then in Termux run <code>termux-setup-storage</code> once if you want to unzip from Downloads.</li>
         <li>Unzip and run the installer:
-          <pre><code>unzip global-reading-room-1.2.0-termux.zip -d global-reading-room
+          <pre><code>unzip global-reading-room-1.3.0-termux.zip -d global-reading-room
 cd global-reading-room
 bash install-termux.sh</code></pre>
         </li>
@@ -332,9 +331,9 @@ bash install-termux.sh</code></pre>
   <div class="platform" id="install-ish">
     <div class="ph"><h3>iPhone / iPad · iSH</h3><span class="tag exp">Experimental</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.2.0-ish.zip</code>. iSH emulates an Alpine Linux environment inside iOS. It is usable for reading but slow for bulk syncing.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-ish.zip</code>. iSH emulates an Alpine Linux environment inside iOS. It is usable for reading but slow for bulk syncing.</p>
       <pre><code>apk add nodejs unzip
-unzip global-reading-room-1.2.0-ish.zip -d global-reading-room
+unzip global-reading-room-1.3.0-ish.zip -d global-reading-room
 cd global-reading-room
 sh start-ish.sh</code></pre>
       <p>Open the printed localhost URL in Safari. Keep iSH in the foreground while the first sync runs. If the app cannot open Safari automatically, copy the URL manually; iSH has no <code>xdg-open</code>.</p>
@@ -650,40 +649,8 @@ Key        (leave empty for Ollama)</code></pre>
   <div class="note"><b>Copyright:</b> exports are for personal offline reading. Do not republish, resell or redistribute the exported articles. The copyright notice stays in the exported files.</div>
 </section>
 
-<section id="groupchat">
-  <h2><span class="num">13 · Group chat</span>The room, the token and the asterisk rule</h2>
-  <p>The reading room can join the <strong>“大厅”</strong> room of a TenSaint73OS relay. It is <strong>disabled by default</strong>: until you tick <strong>启用群聊</strong> and save, the client sends no chat request at all. The token is stored in this browser only, never in the article library, and the address must be HTTPS or a loopback <code>http://127.0.0.1</code> / <code>http://localhost</code>.</p>
-  <h3>Setup</h3>
-  <ol class="steps">
-    <li>Open <strong>群聊</strong> in the top bar, then <strong>群聊设置</strong>.</li>
-    <li>Fill <strong>中继地址</strong> with the TenSaint73OS base URL, for example <code>https://relay.example.com</code> or <code>http://127.0.0.1:7373</code>.</li>
-    <li>Paste the <strong>房间令牌</strong> issued by the TenSaint73OS administrator. Only its hash exists on the relay; the plaintext is shown once.</li>
-    <li>Pick a display name (at most 24 characters), tick <strong>启用群聊</strong>, and save. <strong>测试连接</strong> performs a single read-only check first.</li>
-  </ol>
-  <figure class="plate">
-    <img src="docs/images/guide-12-chat.png" alt="Group chat panel over the reading room, showing the civility rule, the relay settings and masked messages">
-    <figcaption><span>Field guide 12 · the room, the token and the asterisk rule</span><span>Disabled by default; nothing is sent until chat is enabled and saved</span></figcaption>
-  </figure>
-  <h3>Civility is enforced</h3>
-  <div class="note"><b>希望大家文明发言，不文明的字符将会变成星号。</b> Profanity and every pornography-, gambling- or drug-related term (黄赌毒) count as uncivil characters. The relay replaces each matched term with <code>*</code> of the same length <em>before the message is stored or relayed</em>, and this client filters again before display. Chinese terms match as substrings; English terms use word boundaries, so “better” is not mangled by “bet”. Empty messages, messages over 2,000 characters and more than 20 posts per minute are refused.</div>
-  <h3>What is and is not shared</h3>
-  <div class="tablewrap">
-  <table>
-    <thead><tr><th>Item</th><th>Behaviour</th></tr></thead>
-    <tbody>
-      <tr><td>Messages</td><td>One public room, “大厅”. The relay keeps the last 200; this client renders the last 100.</td></tr>
-      <tr><td>Polling</td><td>Every 3.5 seconds while the panel is open and chat is enabled; the timer stops when the panel closes or chat is disabled.</td></tr>
-      <tr><td>Identity</td><td>A display name and the room token. No article, feed, translation, setting or browsing history is sent.</td></tr>
-      <tr><td>Token storage</td><td>Browser local storage on this device. The relay stores only a SHA-256 hash and the administrator can revoke it at any time.</td></tr>
-      <tr><td>Offline</td><td>The room reports the failure; reading, translation, OCR and exports continue to work.</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="ok"><b>The rule in one line:</b> what reaches the relay is already masked, and what appears on screen is masked once more. The asterisk is not a decoration.</div>
-</section>
-
 <section id="settings">
-  <h2><span class="num">14 · Reference</span>Every setting, explained</h2>
+  <h2><span class="num">13 · Reference</span>Every setting, explained</h2>
   <div class="tablewrap">
   <table>
     <thead><tr><th>Setting</th><th>Default</th><th>What it does</th><th>Recommended</th></tr></thead>
@@ -708,7 +675,7 @@ Key        (leave empty for Ollama)</code></pre>
 </section>
 
 <section id="data" class="alt">
-  <h2><span class="num">15 · Data</span>The folder that is the whole application</h2>
+  <h2><span class="num">14 · Data</span>The folder that is the whole application</h2>
   <pre><code>data/
 ├─ db.json                      sources, article index, settings, read/star state
 ├─ db.json.bak                  previous good copy
@@ -739,7 +706,7 @@ Key        (leave empty for Ollama)</code></pre>
 </section>
 
 <section id="security">
-  <h2><span class="num">16 · Trust boundary</span>Security and privacy model</h2>
+  <h2><span class="num">15 · Trust boundary</span>Security and privacy model</h2>
   <div class="grid2">
     <div class="card">
       <h4>Network</h4>
@@ -786,7 +753,7 @@ Key        (leave empty for Ollama)</code></pre>
 </section>
 
 <section id="api" class="alt">
-  <h2><span class="num">17 · Automation</span>The local HTTP API</h2>
+  <h2><span class="num">16 · Automation</span>The local HTTP API</h2>
   <p>Every UI action is backed by a local JSON endpoint. You can script exports, trigger a sync or integrate the archive with another tool. All endpoints are under <code>http://127.0.0.1:7317/api</code> and inherit the localhost-only policy.</p>
   <h3>Health and state</h3>
   <pre><code>curl http://127.0.0.1:7317/api/health
@@ -833,7 +800,7 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <section id="troubleshooting">
-  <h2><span class="num">18 · Recovery</span>Troubleshooting matrix</h2>
+  <h2><span class="num">17 · Recovery</span>Troubleshooting matrix</h2>
   <div class="tablewrap">
   <table>
     <thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
@@ -866,7 +833,7 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <section id="legal" class="alt">
-  <h2><span class="num">19 · Boundary</span>Legal, copyright and honest limitations</h2>
+  <h2><span class="num">18 · Boundary</span>Legal, copyright and honest limitations</h2>
   <h3>What the software reads</h3>
   <p>Global Reading Room reads <strong>public RSS/Atom feeds</strong> and <strong>publicly accessible article pages</strong>. It sends ordinary HTTP requests, respects the publisher's response, and does not defeat authentication, paywalls, DRM, CAPTCHAs or anti-bot systems.</p>
   <h3>What you may do with the output</h3>
@@ -890,7 +857,7 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <section id="faq">
-  <h2><span class="num">20 · Answers</span>Frequently asked questions</h2>
+  <h2><span class="num">19 · Answers</span>Frequently asked questions</h2>
   <h3>Is it really free?</h3>
   <p>The application is free to run and has no subscription. Translation providers may have their own free tiers and quotas. MyMemory needs no key; DeepL, Azure and Baidu have free allowances; OpenAI-compatible services bill according to their own terms.</p>
   <h3>Does it work offline?</h3>
@@ -920,7 +887,7 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <section id="appendix" class="alt">
-  <h2><span class="num">21 · Appendices</span>Short references</h2>
+  <h2><span class="num">20 · Appendices</span>Short references</h2>
   <h3>A · Keyboard shortcuts</h3>
   <div class="tablewrap">
   <table>
@@ -982,8 +949,8 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <footer class="end">
-  <span>GLOBAL READING ROOM · 环球报阁 · COMPLETE MANUAL · V1.2.0</span>
-  <span>LOCAL-FIRST NEWS INTELLIGENCE · 2026-11-15</span>
+  <span>GLOBAL READING ROOM · 环球报阁 · COMPLETE MANUAL · V1.3.0</span>
+  <span>LOCAL-FIRST NEWS INTELLIGENCE · 2026-11-18</span>
 </footer>
 
 </main>

@@ -2,7 +2,7 @@
 
 Requires Node.js 20 or newer (`brew install node`).
 
-1. Download `global-reading-room-1.2.0-macos.tar.gz` and extract it.
+1. Download `global-reading-room-1.3.0-macos.tar.gz` and extract it.
 2. Double-click `Start Global Reading Room.command`.
 3. If Gatekeeper blocks the first launch, right-click the file and choose **Open** once.
 

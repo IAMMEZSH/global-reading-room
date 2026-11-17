@@ -1,1 +1,1 @@
-f01353584d05ebdcd6e3671eb92f110332e3f8aea4b5152db588db229807889b *global-reading-room-1.2.0-windows-x64.zip
+ced57e2a1b57ae1b6a5876f97aef0dc295815ec6b14e99ee252ad8ddd1b36781 *global-reading-room-1.3.0-windows-x64.zip

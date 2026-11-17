@@ -29,7 +29,6 @@
   <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H4l2.3-3.1A8 8 0 1 1 21 12Z"/><path d="M8 11h8M8 15h5"/></symbol>
 </svg>
 
 <div class="app-shell">
@@ -50,7 +49,6 @@
         <input id="searchInput" type="search" placeholder="搜索标题、摘要、作者" autocomplete="off" aria-label="搜索文章">
       </div>
       <button id="syncBtn" class="btn accent sync-btn"><svg class="icon"><use href="#i-sync"/></svg><span>同步</span></button>
-      <button id="chatBtn" class="icon-btn" title="群聊" aria-label="群聊"><svg class="icon"><use href="#i-chat"/></svg></button>
       <button id="settingsBtn" class="icon-btn" title="设置" aria-label="设置"><svg class="icon"><use href="#i-sliders"/></svg></button>
       <button id="themeBtn" class="icon-btn" title="切换夜间模式" aria-label="切换夜间模式"><svg class="icon"><use href="#i-moon"/></svg></button>
     </div>
@@ -171,39 +169,6 @@
       </article>
     </section>
   </main>
-</div>
-
-<div id="chatPanel" class="chat-panel hidden" role="dialog" aria-label="群聊">
-  <header class="chat-head">
-    <div class="chat-head-main">
-      <strong id="chatTitle">群聊 · 大厅</strong>
-      <span id="chatStatus" class="chat-status">未启用</span>
-    </div>
-    <div class="chat-head-actions">
-      <button id="chatSettingsBtn" class="icon-btn chat-icon-btn" title="群聊设置" aria-label="群聊设置"><svg class="icon"><use href="#i-sliders"/></svg></button>
-      <button id="chatCloseBtn" class="icon-btn chat-icon-btn" title="关闭" aria-label="关闭群聊"><svg class="icon"><use href="#i-x"/></svg></button>
-    </div>
-  </header>
-  <div class="chat-notice">文明发言 · 希望大家文明发言，不文明的字符将会变成星号（*）。脏话与涉黄、涉赌、涉毒内容都算不文明字符；中继在服务端强制替换，本机显示前还会再过滤一次。</div>
-  <div id="chatSetup" class="chat-setup hidden">
-    <label class="chat-field"><span>中继地址</span><input id="chatRelayUrl" type="url" placeholder="https://你的隧道地址 或 http://127.0.0.1:7373" autocomplete="off"></label>
-    <label class="chat-field"><span>房间令牌</span><input id="chatToken" type="password" placeholder="由 TenSaint73OS 管理员生成" autocomplete="off"></label>
-    <label class="chat-field"><span>显示昵称</span><input id="chatName" type="text" maxlength="24" placeholder="环球报阁读者" autocomplete="off"></label>
-    <label class="chat-check"><input id="chatEnabled" type="checkbox"><span>启用群聊（连接上面的中继；默认关闭，关闭时不会发出任何请求）</span></label>
-    <div class="chat-setup-actions">
-      <button id="chatTestBtn" class="btn ghost small" type="button">测试连接</button>
-      <button id="chatSaveBtn" class="btn accent small" type="button">保存设置</button>
-    </div>
-    <p class="chat-hint">令牌只保存在这台设备的浏览器里。中继地址支持 https，或本机回环 http://127.0.0.1 / http://localhost。</p>
-  </div>
-  <div id="chatLog" class="chat-log" aria-live="polite"></div>
-  <form id="chatForm" class="chat-composer">
-    <textarea id="chatInput" rows="2" maxlength="2000" placeholder="说点什么…"></textarea>
-    <div class="chat-composer-foot">
-      <span id="chatCount" class="chat-count">0 / 2000</span>
-      <button id="chatSendBtn" class="btn accent small" type="submit">发送</button>
-    </div>
-  </form>
 </div>
 
 <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>

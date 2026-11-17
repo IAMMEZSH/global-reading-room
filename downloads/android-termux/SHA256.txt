@@ -1,1 +1,1 @@
-98a4da091248c360b3f984e345e6aa96910d5a06d9ba72a69bc6c4ab08a31355 *global-reading-room-1.2.0-termux.zip
+e15fc5540c24804249dbc010d959e18a251d256fb9986a81f43f5159345df8be *global-reading-room-1.3.0-termux.zip
