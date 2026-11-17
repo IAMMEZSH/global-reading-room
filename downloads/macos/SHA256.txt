@@ -1,1 +1,1 @@
-a8c8069dc6d7141f4b738801f0af22409d0edca0acd4e50acaa1cfb39e7cd812 *global-reading-room-1.3.0-macos.tar.gz
+62a4f2cedd1c28fcfe398e75cf8aac0c5a60fd4a4544f86d6b952d06cf427672 *global-reading-room-1.3.0-macos.tar.gz

@@ -1,1 +1,1 @@
-109b9a78525dcabda35ec485ae158a8b8c5decd9a53a22627a3f5c2c8f835200 *global-reading-room-1.3.0-linux.tar.gz
+dcaf196becb4a9806a56f341d6f600ad0816e7defdaeb1733ddaef97b96c8cf9 *global-reading-room-1.3.0-linux.tar.gz

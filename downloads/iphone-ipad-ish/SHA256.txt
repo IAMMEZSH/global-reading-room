@@ -1,1 +1,1 @@
-ec8aebbbcbd2a83e1b42039612616be3665fedbdeac1bc43ee4698c7b65f3d21 *global-reading-room-1.3.0-ish.zip
+e6e385d1b7103002d5aad1f0f8c74373b2d8601974b7b4d613d2f724b0f420f9 *global-reading-room-1.3.0-ish.zip
