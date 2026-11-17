@@ -3,8 +3,8 @@
 Requires Node.js 20 or newer (`node --version`).
 
 ```bash
-tar -xzf global-reading-room-1.3.0-linux.tar.gz
-cd global-reading-room-1.3.0
+tar -xzf global-reading-room-1.3.1-linux.tar.gz
+cd global-reading-room-1.3.1
 chmod +x start.sh
 ./start.sh
 ```

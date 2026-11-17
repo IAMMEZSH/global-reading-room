@@ -148,7 +148,7 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
 
 <header class="top">
   <div class="brand"><div class="seal">阁</div><span><b>GLOBAL READING ROOM</b> // OPERATOR MANUAL</span></div>
-  <div class="meta">VERSION 1.3.0 · 2026-11-18<br><span>LOCAL-FIRST NEWS INTELLIGENCE</span></div>
+  <div class="meta">VERSION 1.3.1 · 2026-11-18<br><span>LOCAL-FIRST NEWS INTELLIGENCE</span></div>
 </header>
 
 <nav class="toc" id="toc" aria-label="Contents">
@@ -266,7 +266,7 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
   <div class="platform" id="install-win">
     <div class="ph"><h3>Windows 10 / 11 · portable ZIP</h3><span class="tag">Click to run</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-windows-x64.zip</code>. It contains the application, the official Node.js runtime and two launchers.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.1-windows-x64.zip</code>. It contains the application, the official Node.js runtime and two launchers.</p>
       <ol class="steps">
         <li>Right-click the ZIP → <strong>Extract All…</strong> and choose a normal folder such as <code>C:\Global Reading Room</code>. Do not run it from inside the ZIP preview.</li>
         <li>Open the extracted folder. You should see <code>Start Global Reading Room.vbs</code>, <code>server.js</code>, <code>runtime\</code>, <code>public\</code> and <code>lib\</code>.</li>
@@ -283,9 +283,9 @@ footer.end{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;ma
   <div class="platform" id="install-linux">
     <div class="ph"><h3>Linux</h3><span class="tag">Source ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-linux.tar.gz</code>. Requires Node.js 20+ from your distribution, NodeSource, nvm or a similar source.</p>
-      <pre><code>tar -xzf global-reading-room-1.3.0-linux.tar.gz
-cd global-reading-room-1.3.0
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.1-linux.tar.gz</code>. Requires Node.js 20+ from your distribution, NodeSource, nvm or a similar source.</p>
+      <pre><code>tar -xzf global-reading-room-1.3.1-linux.tar.gz
+cd global-reading-room-1.3.1
 chmod +x start.sh
 ./start.sh</code></pre>
       <p><code>start.sh</code> changes to its own folder, starts <code>server.js</code> and lets the server open your browser. On a headless server or a minimal window manager, use:</p>
@@ -299,10 +299,10 @@ chmod +x start.sh
   <div class="platform" id="install-mac">
     <div class="ph"><h3>macOS 12+</h3><span class="tag">Source ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-macos.tar.gz</code>. Install Node.js first, for example with Homebrew:</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.1-macos.tar.gz</code>. Install Node.js first, for example with Homebrew:</p>
       <pre><code>brew install node
-tar -xzf global-reading-room-1.3.0-macos.tar.gz
-cd global-reading-room-1.3.0</code></pre>
+tar -xzf global-reading-room-1.3.1-macos.tar.gz
+cd global-reading-room-1.3.1</code></pre>
       <p>Double-click <strong>Start Global Reading Room.command</strong>. The first time, macOS Gatekeeper may block it: right-click the file → <strong>Open</strong> → <strong>Open</strong> again. You can also run <code>./start-mac.sh</code> from Terminal.</p>
       <p>Apple silicon and Intel are both supported because the app itself is architecture-neutral JavaScript. The launcher uses the system Node.js you installed.</p>
       <div class="note">If the browser does not open, visit <code>http://127.0.0.1:7317</code> manually. The terminal window must stay open; closing it stops the server.</div>
@@ -312,12 +312,12 @@ cd global-reading-room-1.3.0</code></pre>
   <div class="platform" id="install-termux">
     <div class="ph"><h3>Android · Termux</h3><span class="tag">Termux ready</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-termux.zip</code>. There is no APK. Termux provides a real Linux userland and runs the same Node.js source.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.1-termux.zip</code>. There is no APK. Termux provides a real Linux userland and runs the same Node.js source.</p>
       <ol class="steps">
         <li>Install <strong>Termux</strong> from F-Droid (recommended) or the Termux GitHub releases. The Play Store build is outdated and not recommended.</li>
         <li>Copy the ZIP to the phone, then in Termux run <code>termux-setup-storage</code> once if you want to unzip from Downloads.</li>
         <li>Unzip and run the installer:
-          <pre><code>unzip global-reading-room-1.3.0-termux.zip -d global-reading-room
+          <pre><code>unzip global-reading-room-1.3.1-termux.zip -d global-reading-room
 cd global-reading-room
 bash install-termux.sh</code></pre>
         </li>
@@ -331,9 +331,9 @@ bash install-termux.sh</code></pre>
   <div class="platform" id="install-ish">
     <div class="ph"><h3>iPhone / iPad · iSH</h3><span class="tag exp">Experimental</span></div>
     <div class="pb">
-      <p><strong>Package:</strong> <code>global-reading-room-1.3.0-ish.zip</code>. iSH emulates an Alpine Linux environment inside iOS. It is usable for reading but slow for bulk syncing.</p>
+      <p><strong>Package:</strong> <code>global-reading-room-1.3.1-ish.zip</code>. iSH emulates an Alpine Linux environment inside iOS. It is usable for reading but slow for bulk syncing.</p>
       <pre><code>apk add nodejs unzip
-unzip global-reading-room-1.3.0-ish.zip -d global-reading-room
+unzip global-reading-room-1.3.1-ish.zip -d global-reading-room
 cd global-reading-room
 sh start-ish.sh</code></pre>
       <p>Open the printed localhost URL in Safari. Keep iSH in the foreground while the first sync runs. If the app cannot open Safari automatically, copy the URL manually; iSH has no <code>xdg-open</code>.</p>
@@ -343,8 +343,8 @@ sh start-ish.sh</code></pre>
   <div class="note"><b>Update notices.</b> Every launch asks the local server to read the latest public release tag from GitHub (<code>/api/update</code>, cached for 30 minutes). If a newer version exists, a card appears in the bottom-right corner with links to the GitHub release and the GitCode mirror. The request carries no articles, feeds, settings or API keys; if GitHub is unreachable, the card is simply absent. Dismissing it remembers that tag in this browser only. Replacing the program files does not touch <code>data/</code>.
   </div>
   <figure class="plate">
-    <img src="docs/images/guide-11-update-check.png" alt="The running build v1.3.0 after checking the newest public release; no update card because it is the latest">
-    <figcaption><span>Field guide 11 · v1.3.0 checks the newest public release</span><span>No article or settings data leaves the machine</span></figcaption>
+    <img src="docs/images/guide-11-update-check.png" alt="The running build v1.3.1 after checking the newest public release; no update card because it is the latest">
+    <figcaption><span>Field guide 11 · v1.3.1 checks the newest public release</span><span>No article or settings data leaves the machine</span></figcaption>
   </figure>
 </section>
 
@@ -949,7 +949,7 @@ curl -X POST http://127.0.0.1:7317/api/captions \
 </section>
 
 <footer class="end">
-  <span>GLOBAL READING ROOM · 环球报阁 · COMPLETE MANUAL · V1.3.0</span>
+  <span>GLOBAL READING ROOM · 环球报阁 · COMPLETE MANUAL · V1.3.1</span>
   <span>LOCAL-FIRST NEWS INTELLIGENCE · 2026-11-18</span>
 </footer>
 
