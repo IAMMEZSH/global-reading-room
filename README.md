@@ -9,17 +9,17 @@ Version 1.3.1 · Node.js ≥ 20 · Windows · Linux · macOS · Android (Termux)
 
 ## Download
 
-**Windows 10 / 11 users:** [**download the portable Windows ZIP**](downloads/windows/global-reading-room-1.3.1-windows-x64.zip), unzip it, then double-click **`Start Global Reading Room.vbs`**. No installer, no admin rights, Node.js is bundled.
+**Windows 10 / 11 users:** [**download the portable Windows ZIP**](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-windows-x64.zip), unzip it, then double-click **`Start Global Reading Room.vbs`**. No installer, no admin rights, Node.js is bundled.
 
 | Platform | Package | Launcher |
 | --- | --- | --- |
-| **Windows 10 / 11 (x64)** | [Windows ZIP](downloads/windows/global-reading-room-1.3.1-windows-x64.zip) | `Start Global Reading Room.vbs` |
-| **Linux** | [Linux tar.gz](downloads/linux/global-reading-room-1.3.1-linux.tar.gz) | `start.sh` |
-| **macOS 12+** | [macOS tar.gz](downloads/macos/global-reading-room-1.3.1-macos.tar.gz) | `Start Global Reading Room.command` |
-| **Android — Termux** | [Termux ZIP](downloads/android-termux/global-reading-room-1.3.1-termux.zip) | `install-termux.sh` |
-| **iPhone / iPad — iSH** | [iSH ZIP](downloads/iphone-ipad-ish/global-reading-room-1.3.1-ish.zip) | `start-ish.sh` |
+| **Windows 10 / 11 (x64)** | [Windows ZIP](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-windows-x64.zip) | `Start Global Reading Room.vbs` |
+| **Linux** | [Linux tar.gz](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-linux.tar.gz) | `start.sh` |
+| **macOS 12+** | [macOS tar.gz](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-macos.tar.gz) | `Start Global Reading Room.command` |
+| **Android — Termux** | [Termux ZIP](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-termux.zip) | `install-termux.sh` |
+| **iPhone / iPad — iSH** | [iSH ZIP](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/global-reading-room-1.3.1-ish.zip) | `start-ish.sh` |
 
-Each platform folder contains its own `README.md` and `SHA256.txt`. All hashes are also in [`downloads/SHA256SUMS.txt`](downloads/SHA256SUMS.txt). The same five packages are attached to the [GitHub v1.3.1 release](https://github.com/IAMMEZSH/global-reading-room/releases/tag/v1.3.1) and the [GitCode v1.3.1 release](https://gitcode.com/gcw_So3EkhfR/global-reading-room/releases/v1.3.1).
+Each platform folder contains its own `README.md` and `SHA256.txt`. All hashes are also in [`downloads/SHA256SUMS.txt`](https://github.com/IAMMEZSH/global-reading-room/releases/download/v1.3.1/SHA256SUMS.txt). The same five packages are attached to the [GitHub v1.3.1 release](https://github.com/IAMMEZSH/global-reading-room/releases/tag/v1.3.1) and the [GitCode v1.3.1 release](https://gitcode.com/gcw_So3EkhfR/global-reading-room/releases/v1.3.1).
 
 ![Global Reading Room command deck](docs/images/guide-01-command-deck.png)
 
