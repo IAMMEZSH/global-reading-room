@@ -95,10 +95,10 @@ Eleven full-resolution English plates explain the interface, the architecture, t
 ### 10 · Zoom, pan, inspect
 ![Lightbox](docs/images/guide-10-lightbox.png)
 
-### 11 · New-version notice
-![Update notice](docs/images/guide-11-update-notice.png)
+### 11 · Version check and update notice
+![Running build v1.3.0 checking the newest public release](docs/images/guide-11-update-check.png)
 
-An older copy at launch: the card names the newest release — version number included — and links both mirrors. Nothing is uploaded; the check reads one public release record.
+At launch the app reads the newest public release tag — v1.3.0 for this build — and caches it for 30 minutes. A card with GitHub and GitCode links appears only when a newer tag exists; when the running build is the latest, no card is shown. Nothing is uploaded; the check reads one public release record.
 
 The complete operating manual — installation, every setting, provider setup, OCR, captions, backups, API, troubleshooting and the legal boundary — is in **[MANUAL.html](MANUAL.html)**.
 
